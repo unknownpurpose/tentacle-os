@@ -1,0 +1,8 @@
+version: '3'
+services:
+  builder:
+    image: 'ros:indigo-ros-base'
+    volumes:
+      - .:/catkin_ws
+    stdin_open: true
+    tty: true
