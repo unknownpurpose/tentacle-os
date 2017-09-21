@@ -1,4 +1,5 @@
 FROM ros:indigo-ros-base
+USER root
 
 RUN apt-get update && apt-get install -y \
   build-essential
