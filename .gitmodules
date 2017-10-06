@@ -1,3 +1,6 @@
 [submodule "src/dynamixel_motor"]
 	path = src/dynamixel_motor
 	url = https://github.com/arebgun/dynamixel_motor.git
+[submodule "src/control_msgs"]
+	path = src/control_msgs
+	url = https://github.com/ros-controls/control_msgs.git
