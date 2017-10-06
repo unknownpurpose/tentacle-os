@@ -3,8 +3,14 @@ USER root
 
 RUN apt-get update && apt-get install -y \
   build-essential \
-  python-pip
+  python-pip \
+  python-dev \
+  python-smbus \
+  git
 RUN pip install pyserial
+RUN git clone https://github.com/adafruit/Adafruit_Python_BNO055.git ~/Adafruit_Python_BNO055 && \
+  cd ~/Adafruit_Python_BNO055 && \
+  python setup.py install
 
 COPY . /catkin_ws
 WORKDIR /catkin_ws
