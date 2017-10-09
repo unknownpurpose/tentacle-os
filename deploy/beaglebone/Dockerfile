@@ -1,11 +1,11 @@
-FROM syrianspock/beaglebone-ros
+FROM syrianspock:beaglebone-ros
 ## ^^ first download and build this locally from https://github.com/SyrianSpock/beaglebone-docker-images
 
 USER root
 
 RUN apt-get update && apt-get install -y \
   python-pip \
-  python-smbus \
+  python-smbus
 RUN pip install pyserial
 RUN git clone https://github.com/adafruit/Adafruit_Python_BNO055.git ~/Adafruit_Python_BNO055 && \
   cd ~/Adafruit_Python_BNO055 && \
