@@ -3,6 +3,7 @@
 import rospy
 from geometry_msgs.msg import Quaternion
 from Adafruit_BNO055 import BNO055
+from threading import Thread
 
 class IMUPublisher:
     def __init__(self, bno, node_name, refresh_rate=10):
@@ -47,7 +48,7 @@ if __name__ == '__main__':
     try:
         # Raspberry Pi configuration with serial UART and RST connected to GPIO 18:
         #bno = BNO055.BNO055(serial_port='/dev/ttyAMA0', rst=18)
-        bno = BNO055.BNO055(rst='P9_12', busnum=2) # << or... Beaglebone on standard i2c
+        bno = BNO055.BNO055(busnum=2) # << or... Beaglebone on standard i2c
         imu = IMUPublisher(bno=bno, node_name='bno055')
         imu.start()
 
