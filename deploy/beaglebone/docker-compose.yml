@@ -1,0 +1,6 @@
+version: '3'
+services:
+  builder:
+    image: 'fhtagn:base'
+    volumes:
+      - .:/catkin_ws

@@ -6,7 +6,7 @@ USER root
 RUN apt-get update && apt-get install -y \
   python-pip \
   python-smbus
-RUN pip install pyserial
+RUN pip install pyserial Adafruit_BBIO
 RUN git clone https://github.com/adafruit/Adafruit_Python_BNO055.git ~/Adafruit_Python_BNO055 && \
   cd ~/Adafruit_Python_BNO055 && \
   python setup.py install
