@@ -33,4 +33,4 @@ cm0, dc0 = getIntrinsicsFromImages(glob.glob('images/cap0-*.png'))
 cm2, dc2 = getIntrinsicsFromImages(glob.glob('images/cap2-*.png'))
 
 # store in a calibration file for later
-np.savez('calib.npz',mtx1=cm0,dist1=dc0,mtx2=cm2,dist2=dc2)
+np.savez('calibs/calib.npz',mtx1=cm0,dist1=dc0,mtx2=cm2,dist2=dc2)

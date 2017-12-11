@@ -1,6 +1,28 @@
 version: '3'
 services:
-  builder:
+  master:
+    image: 'fhtagn:base'
+    container_name: master
+    environment:
+      - "ROS_HOSTNAME=master"
+    command: roscore
+
+  imu:
     image: 'fhtagn:base'
     volumes:
       - .:/catkin_ws
+    container_name: imu
+    environment:
+      - "ROS_HOSTNAME=imu"
+      - "ROS_MASTER_URI=http://master:11311"
+    command: rosrun bno055 imu_publisher.py
+
+  tentacle:
+    image: 'fhtagn:base'
+    volumes:
+      - .:/catkin_ws
+    container_name: tentacle
+    environment:
+      - "ROS_HOSTNAME=tentacle"
+      - "ROS_MASTER_URI=http://master:11311"
+    command: rosrun tentacle_control controller_manager

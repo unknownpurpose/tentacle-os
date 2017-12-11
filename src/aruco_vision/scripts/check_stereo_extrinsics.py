@@ -3,8 +3,8 @@
 import cv2
 import numpy as np
 
-calib = np.load('calib.npz')
-calibStereo = np.load('calib-stereo.npz')
+calib = np.load('calibs/calib.npz')
+calibStereo = np.load('calibs/calib-stereo.npz')
 
 mtx1,dist1 = calib['mtx1'],calib['dist1']
 mtx2,dist2 = calib['mtx2'],calib['dist2']
