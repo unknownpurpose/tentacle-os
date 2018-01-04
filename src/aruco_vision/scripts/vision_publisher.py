@@ -23,6 +23,7 @@ def start():
     position_publisher = rospy.Publisher('aruco/position', Point, queue_size=10)
     image_publisher_left = rospy.Publisher('camera/left', Image, queue_size=10)
     image_publisher_right = rospy.Publisher('camera/right', Image, queue_size=10)
+    image_publisher = rospy.Publisher('camera/both', Image, queue_size=10)
 
     bridge = CvBridge()
 
@@ -37,10 +38,14 @@ def start():
 
     capL = cv2.VideoCapture(0)
     capL.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*"H264"))
-    capL.set(cv2.CAP_PROP_FPS, 10.0)
+    capL.set(cv2.CAP_PROP_FRAME_WIDTH, 800)
+    capL.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
+    # capL.set(cv2.CAP_PROP_FPS, 10.0)
     capR = cv2.VideoCapture(1)
     capR.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*"H264"))
-    capR.set(cv2.CAP_PROP_FPS, 10.0)
+    # capR.set(cv2.CAP_PROP_FPS, 10.0)
+    capR.set(cv2.CAP_PROP_FRAME_WIDTH, 800)
+    capR.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
 
     aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
     parameters =  cv2.aruco.DetectorParameters_create()
@@ -53,10 +58,13 @@ def start():
         greyL = cv2.cvtColor(frameL, cv2.COLOR_BGR2GRAY)
         greyR = cv2.cvtColor(frameR, cv2.COLOR_BGR2GRAY)
 
-        msgL = bridge.cv2_to_imgmsg(greyL, encoding="passthrough")
+        msgL = bridge.cv2_to_imgmsg(frameL, encoding="bgr8")
         image_publisher_left.publish(msgL)
-        msgR = bridge.cv2_to_imgmsg(greyR, encoding="passthrough")
+        msgR = bridge.cv2_to_imgmsg(frameR, encoding="bgr8")
         image_publisher_right.publish(msgR)
+        frame = np.concatenate((frameL,frameR), axis=1)
+        msg = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
+        image_publisher.publish(msg)
 
         cornersL, idsL, _ = cv2.aruco.detectMarkers(greyL, aruco_dict, parameters=parameters)
         cornersR, idsR, _ = cv2.aruco.detectMarkers(greyR, aruco_dict, parameters=parameters)
